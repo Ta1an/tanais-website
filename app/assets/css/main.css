@@ -63,6 +63,10 @@
     line-height: 1.625;
   }
 
+  section {
+    @apply px-4 py-12 md:px-[8%] md:py-[6%] lg:px-[10%] lg:py-[4%] scroll-mt-28;
+  }
+
   h1,
   h2,
   h3,
@@ -104,10 +108,6 @@
 }
 
 @layer components {
-  .section {
-    @apply px-4 py-12 md:px-[8%] md:py-[6%] lg:px-[10%] lg:py-[4%] scroll-mt-28;
-  }
-
   .top-section {
     @apply pt-28 sm:pt-32 lg:pt-40;
   }

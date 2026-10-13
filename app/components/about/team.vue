@@ -30,7 +30,7 @@ const specialists = [
     to: "/about#team",
   },
   {
-    name: "Даурен",
+    name: "Даурен Керимбеков",
     role: "Специалист центра TANAIS",
     description: "Сопровождение клиентов и участие в программах центра.",
     image: "/img/team/dauren.jpg",
@@ -77,7 +77,7 @@ const contentVariants = {
 <template>
   <section
     id="team"
-    class="section flex flex-col gap-10"
+    class="flex flex-col gap-10"
   >
     <!-- =========================================
          HEADER

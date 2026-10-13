@@ -68,7 +68,7 @@ const aboutImage = `${config.app.baseURL}img/about.jpg`;
 
 <template>
   <section
-    class="section top-section grid min-h-svh grid-cols-1 items-center gap-10 lg:grid-cols-[0.75fr_1fr]"
+    class="top-section grid min-h-svh grid-cols-1 items-center gap-10 lg:grid-cols-[0.75fr_1fr]"
   >
     <!-- =====================================
          LEFT

@@ -64,7 +64,7 @@ const numberVariants = {
 </script>
 
 <template>
-  <section id="diagnostics" class="section">
+  <section id="diagnostics">
     <motion.div
       class="card grid overflow-hidden rounded-4xl lg:grid-cols-[0.75fr_1.25fr]"
       :variants="fadeScale"

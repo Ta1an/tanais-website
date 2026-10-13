@@ -68,7 +68,7 @@ const signatureVariants = {
 
 <template>
   <section
-    class="relative grid grid-cols-1 lg:grid-cols-2 min-h-svh items-center section top-section"
+    class="relative grid grid-cols-1 lg:grid-cols-2 min-h-svh items-center top-section"
   >
     <!-- Left -->
     <motion.div
@@ -78,7 +78,7 @@ const signatureVariants = {
       animate="visible"
     >
       <motion.div :variants="fadeUp">
-        <Eyebrow text="Игровая зависимость · Созависимость" />
+        <Eyebrow text="Лечение игровой зависимости без изоляции" />
       </motion.div>
 
       <div class="flex flex-col gap-3 sm:gap-4">

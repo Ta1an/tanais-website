@@ -24,11 +24,11 @@ useSeoMeta({
   После этого вся страница обновится автоматически.
 */
 const contacts = {
-  phone: "+7 700 000 00 00",
-  phoneRaw: "+77000000000",
+  phone: "+7 705 910 81 38",
+  phoneRaw: "+77059108138",
 
-  whatsapp: "+7 700 000 00 00",
-  whatsappRaw: "77000000000",
+  whatsapp: "+7 705 910 81 38",
+  whatsappRaw: "77059108138",
 
   instagram: "@psiholog.almaty.aigul",
   instagramUrl: "https://instagram.com/psiholog.almaty.aigul",
@@ -74,12 +74,12 @@ const info_blocks = [
   {
     icon: "tabler:map-pin",
     title: "Адрес",
-    text: "г. Алматы, ул. Абая 123, офис 456",
+    text: "г. Алматы, ул. Кулымбетова, 109",
   },
   {
     icon: "tabler:clock",
     title: "График",
-    text: "Пн-Пт 10:00-19:00, Сб 10:00-15:00, Вс — выходной.",
+    text: "Ежедневно 10:00-20:00",
   },
   {
     icon: "tabler:users",
@@ -328,7 +328,10 @@ const heroCardVariants = {
             @submit.prevent="sendToWhatsApp"
           >
             <!-- Name + Phone -->
-            <motion.div class="grid gap-3 sm:gap-4 md:grid-cols-2" :variants="fadeUp">
+            <motion.div
+              class="grid gap-3 sm:gap-4 md:grid-cols-2"
+              :variants="fadeUp"
+            >
               <label class="flex flex-col gap-2">
                 <span class="text-sm text-text-muted/70">
                   Как к вам обращаться

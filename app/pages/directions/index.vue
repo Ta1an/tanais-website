@@ -84,7 +84,7 @@ const directionIconVariants = {
          HERO
     ========================================== -->
     <section
-      class="section top-section relative grid grid-cols-1 items-center lg:grid-cols-2"
+      class="top-section relative grid grid-cols-1 items-center lg:grid-cols-2"
     >
       <!-- Left -->
       <motion.div
@@ -157,7 +157,7 @@ const directionIconVariants = {
     <!-- =========================================
          KEY DIRECTIONS
     ========================================== -->
-    <section class="section flex flex-col gap-10">
+    <section class="flex flex-col gap-10">
       <!-- Header -->
       <motion.div
         class="grid gap-6 sm:gap-8 lg:grid-cols-2"

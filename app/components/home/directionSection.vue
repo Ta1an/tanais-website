@@ -81,7 +81,7 @@ const horizontalLineVariants = {
 </script>
 
 <template>
-  <section id="directions" class="section flex flex-col gap-10">
+  <section id="directions" class="flex flex-col gap-10">
     <!-- Header -->
     <div class="grid lg:grid-cols-[1fr_auto]">
       <motion.div

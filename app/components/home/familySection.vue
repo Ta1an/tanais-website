@@ -30,7 +30,7 @@ const questions = [
 </script>
 
 <template>
-  <section class="section relative">
+  <section class="relative">
     <motion.div
       class="grid gap-10 rounded-4xl border border-border/20 bg-bg/80 shadow-(--glow-m) p-10 lg:grid-cols-2 lg:items-center lg:p-14"
       :variants="fadeScale"

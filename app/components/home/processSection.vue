@@ -68,7 +68,7 @@ function getStepProps(step: (typeof steps)[number]) {
   <section
     id="process"
     ref="processRef"
-    class="section flex flex-col gap-10"
+    class="flex flex-col gap-10"
   >
     <!-- Header -->
     <motion.div

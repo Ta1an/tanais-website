@@ -202,7 +202,7 @@ const cycleGridClass = computed(() => {
          HERO
     ========================================= -->
     <section
-      class="section top-section grid grid-cols-1 items-center lg:grid-cols-[1fr_0.75fr]"
+      class="top-section grid grid-cols-1 items-center lg:grid-cols-[1fr_0.75fr]"
     >
       <!-- Left -->
       <motion.div
@@ -329,7 +329,7 @@ const cycleGridClass = computed(() => {
     <!-- ========================================
          SITUATIONS
     ========================================= -->
-    <section class="section flex flex-col gap-10">
+    <section class="flex flex-col gap-10">
       <!-- Header -->
       <motion.div
         class="grid gap-6 sm:gap-8 lg:grid-cols-2"
@@ -393,7 +393,7 @@ const cycleGridClass = computed(() => {
     <!-- ========================================
          CYCLE
     ========================================= -->
-    <section v-if="cycle" id="cycle" class="section flex flex-col gap-10">
+    <section v-if="cycle" id="cycle" class="flex flex-col gap-10">
       <!-- Header -->
       <motion.div
         class="flex flex-col gap-8"
@@ -469,7 +469,7 @@ const cycleGridClass = computed(() => {
     <!-- ========================================
          MECHANISMS
     ========================================= -->
-    <section class="section flex flex-col gap-10">
+    <section class="flex flex-col gap-10">
       <motion.div
         class="grid gap-3 sm:gap-4 lg:grid-cols-2"
         :variants="stagger(0.1)"
@@ -576,7 +576,7 @@ const cycleGridClass = computed(() => {
     <!-- ========================================
          WORK
     ========================================= -->
-    <section class="section flex flex-col gap-10">
+    <section class="flex flex-col gap-10">
       <motion.div
         class="flex flex-col gap-3 sm:gap-8"
         :variants="stagger(0.1)"
@@ -638,7 +638,7 @@ const cycleGridClass = computed(() => {
     <!-- ========================================
          RELATED
     ========================================= -->
-    <section v-if="related" class="section">
+    <section v-if="related">
       <motion.div
         :variants="fadeScale"
         initial="hidden"

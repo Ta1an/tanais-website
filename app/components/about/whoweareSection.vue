@@ -14,7 +14,7 @@ import {
 
 <template>
   <motion.section
-    class="section grid grid-cols-1 gap-6 sm:gap-8 lg:grid-cols-[0.5fr_1fr_0.5fr] overflow-hidden"
+    class="grid grid-cols-1 gap-6 sm:gap-8 lg:grid-cols-[0.5fr_1fr_0.5fr] overflow-hidden"
     :variants="stagger(0.1)"
     initial="hidden"
     while-in-view="visible"

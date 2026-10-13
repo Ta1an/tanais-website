@@ -34,7 +34,7 @@ const features = [
 </script>
 
 <template>
-  <section id="about" class="section flex flex-col gap-10">
+  <section id="about" class="flex flex-col gap-10">
     <motion.div
       class="grid gap-8 sm:gap-6 lg:grid-cols-[1fr_0.5fr] lg:items-center"
       :variants="stagger(0.1)"

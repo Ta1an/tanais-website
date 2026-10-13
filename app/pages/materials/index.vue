@@ -109,7 +109,7 @@ const sideLineVariants = {
          HERO
     ========================================== -->
   <section
-    class="section top-section grid grid-cols-1 items-center lg:grid-cols-2"
+    class="top-section grid grid-cols-1 items-center lg:grid-cols-2"
   >
     <!-- Left -->
     <motion.div
@@ -164,7 +164,7 @@ const sideLineVariants = {
   <!-- =========================================
          MATERIALS
     ========================================== -->
-  <section class="section flex flex-col gap-10">
+  <section class="flex flex-col gap-10">
     <motion.div
       class="flex flex-col gap-3 sm:gap-4 md:flex-row md:items-end md:justify-between"
       :variants="stagger(0.1)"

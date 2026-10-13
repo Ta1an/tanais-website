@@ -105,7 +105,7 @@ const lineRightVariants = {
 </script>
 
 <template>
-  <section id="approach" class="section flex flex-col gap-10">
+  <section id="approach" class="flex flex-col gap-10">
     <!-- =========================================
          HEADER
     ========================================== -->

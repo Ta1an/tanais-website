@@ -51,7 +51,7 @@ const trustItems = computed(() => {
 </script>
 
 <template>
-  <section :id="sectionId ?? 'contact'" class="section relative overflow-hidden">
+  <section :id="sectionId ?? 'contact'" class="relative overflow-hidden">
     <!-- Glow -->
     <motion.div
       class="pointer-events-none absolute left-1/2 top-1/2 size-124 -translate-x-1/2 -translate-y-1/2 rounded-full bg-blue-500/8 blur-[120px]"
