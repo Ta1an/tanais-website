@@ -151,7 +151,7 @@ const horizontalLineVariants = {
       >
         <NuxtLink
           :to="direction.to"
-          class="group card card-hover relative grid grid-cols-[1fr_auto] h-full gap-4 overflow-hidden"
+          class="group card card-hover relative grid grid-cols-[1fr_auto] grid-rows-[auto_auto_1fr_auto_auto] h-full gap-4 overflow-hidden"
         >
           <div
             class="glow-blue -right-16 -top-16 size-56 transition-all duration-500 group-hover:scale-125 group-hover:bg-violet-500/15"
