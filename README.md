@@ -8,7 +8,7 @@ The project focuses on creating a clean and accessible digital experience throug
 
 ## Preview
 
-![TANAIS Website Preview](./public/preview.png)
+![TANAIS Website Preview](./public/img/preview.png)
 
 ## Tech Stack
 
