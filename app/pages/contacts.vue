@@ -2,6 +2,9 @@
 import Eyebrow from "~/components/shared/eyebrow.vue";
 
 import { motion } from "motion-v";
+import { useGoogleAds } from "~/composables/useGoogleAds";
+
+const { trackWhatsAppClick } = useGoogleAds();
 
 import {
   fadeLeft,
@@ -105,7 +108,13 @@ function sendToWhatsApp() {
     `https://wa.me/${contacts.whatsappRaw}` +
     `?text=${encodeURIComponent(text)}`;
 
-  window.open(url, "_blank", "noopener,noreferrer");
+  // Открываем WhatsApp
+  const whatsappWindow = window.open(url, "_blank");
+
+  // Отслеживаем открытие окна
+  if (whatsappWindow) {
+    trackWhatsAppClick();
+  }
 }
 
 const heroCardVariants = {
@@ -166,6 +175,7 @@ const heroCardVariants = {
             target="_blank"
             rel="noopener noreferrer"
             class="button button-primary"
+            @click="trackWhatsAppClick"
           >
             <Icon name="tabler:brand-whatsapp" class="size-7" />
 
@@ -268,6 +278,7 @@ const heroCardVariants = {
         :rel="item.external ? 'noopener noreferrer' : undefined"
         class="group card card-hover grid gap-3 sm:gap-4"
         :variants="fadeScale"
+        @click="item.title === 'WhatsApp' && trackWhatsAppClick()"
       >
         <div
           class="icon col-start-1 row-start-1 transition-colors duration-300 group-hover:text-violet-400"
