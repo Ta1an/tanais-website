@@ -15,6 +15,25 @@ export default defineNuxtConfig({
     },
   },
 
+  app: {
+    head: {
+      script: [
+        {
+          src: "https://www.googletagmanager.com/gtag/js?id=AW-18555509083",
+          async: true,
+        },
+        {
+          innerHTML: `
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'AW-18555509083');
+          `,
+        },
+      ],
+    },
+  },
+
   css: ["@/assets/css/main.css"],
   modules: ["@nuxt/icon", "@nuxt/fonts", "motion-v/nuxt"],
 

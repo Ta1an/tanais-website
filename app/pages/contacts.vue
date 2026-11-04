@@ -24,11 +24,11 @@ useSeoMeta({
   После этого вся страница обновится автоматически.
 */
 const contacts = {
-  phone: "+7 705 910 81 38",
-  phoneRaw: "+77059108138",
+  phone: "+7 705 131 91 93",
+  phoneRaw: "+77051319193",
 
-  whatsapp: "+7 705 910 81 38",
-  whatsappRaw: "77059108138",
+  whatsapp: "+7 705 131 91 93",
+  whatsappRaw: "77051319193",
 
   instagram: "@psiholog.almaty.aigul",
   instagramUrl: "https://instagram.com/psiholog.almaty.aigul",
