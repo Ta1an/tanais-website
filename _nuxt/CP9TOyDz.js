@@ -1,0 +1,1 @@
+import{B as e,L as t,ft as n,on as r,q as i}from"./DnIZtbVS.js";var a={class:`flex items-center gap-2 uppercase tracking-[0.4em] text-primary text-xs md:text-sm`},o=Object.assign(i({__name:`eyebrow`,props:{text:String},setup(i){return(o,s)=>(n(),e(`div`,a,[t(`span`,null,r(i.text),1)]))}}),{__name:`SharedEyebrow`});export{o as t};
