@@ -164,7 +164,7 @@ const aboutImage = `${config.app.baseURL}img/about.jpg`;
 
       <!-- Gradient -->
       <div
-        class="col-[1/2] z-11 row-[1/2] bg-linear-to-t from-bg-dark/95 via-bg-dark/20 via-45% to-transparent"
+        class="col-[1/2] z-11 row-[1/2] bg-linear-to-t from-black/40 via-black/10 via-45% to-transparent"
       />
 
       <!-- Content -->
@@ -174,20 +174,13 @@ const aboutImage = `${config.app.baseURL}img/about.jpg`;
         initial="hidden"
         animate="visible"
       >
-        <motion.div
-          class="mb-3 h-px w-10 origin-left bg-linear-to-r from-primary to-transparent"
-          :variants="lineVariants"
-          initial="hidden"
-          animate="visible"
-        />
-
         <div
-          class="text-sm font-semibold uppercase tracking-[0.18em] text-text"
+          class="text-sm font-semibold uppercase tracking-[0.18em] text-white"
         >
           Команда TANAIS
         </div>
 
-        <p class="mt-2 text-sm text-text-muted/70">
+        <p class="mt-2 text-sm text-neutral-200">
           Специалисты, объединённые одним подходом
         </p>
       </motion.div>

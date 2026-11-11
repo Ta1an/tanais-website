@@ -188,7 +188,7 @@ const horizontalLineVariants = {
             <span
               v-for="tag in direction.tags"
               :key="tag"
-              class="rounded-full border border-border/10 bg-white/3 px-3 py-1.5 text-xs text-text-muted/55"
+              class="rounded-full border border-border bg-primary/3 px-3 py-1.5 text-xs text-text-muted"
             >
               {{ tag }}
             </span>

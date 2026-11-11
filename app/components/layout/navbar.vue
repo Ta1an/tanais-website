@@ -1,10 +1,21 @@
 <script setup lang="ts">
+import { onMounted, onUnmounted, ref, watch } from "vue";
+
 const route = useRoute();
 
-const isMenuOpen = ref(false);
-const mobileOpenSection = ref<string | null>(null);
+type NavChild = {
+  label: string;
+  href: string;
+  icon: string;
+};
 
-const navItems = [
+type NavItem = {
+  label: string;
+  href: string;
+  children?: NavChild[];
+};
+
+const navItems: NavItem[] = [
   {
     label: "О центре",
     href: "/about",
@@ -31,7 +42,6 @@ const navItems = [
       },
     ],
   },
-
   {
     label: "Направления",
     href: "/directions",
@@ -53,300 +63,440 @@ const navItems = [
       },
     ],
   },
-
   {
     label: "Материалы",
     href: "/materials",
   },
-
   {
     label: "Контакты",
     href: "/contacts",
   },
 ];
 
+const navbarRef = ref<HTMLElement | null>(null);
+
+const isScrolled = ref(false);
+const isMenuOpen = ref(false);
+const mobileOpenSection = ref<string | null>(null);
+
 function isActive(href: string) {
-  if (href === "/") {
-    return route.path === "/";
-  }
+  if (href === "/") return route.path === "/";
 
   return route.path === href || route.path.startsWith(`${href}/`);
+}
+
+function closeMenu() {
+  isMenuOpen.value = false;
+  mobileOpenSection.value = null;
 }
 
 function toggleMobileSection(label: string) {
   mobileOpenSection.value = mobileOpenSection.value === label ? null : label;
 }
 
+const activeDropdown = ref<string | null>(null);
+const lockedDropdown = ref<string | null>(null);
+
+function openDropdown(label: string) {
+  if (lockedDropdown.value === label) return;
+
+  activeDropdown.value = label;
+}
+
+function leaveDropdown(label: string) {
+  if (activeDropdown.value === label) {
+    activeDropdown.value = null;
+  }
+
+  if (lockedDropdown.value === label) {
+    lockedDropdown.value = null;
+  }
+}
+
+function closeDropdown(label: string) {
+  activeDropdown.value = null;
+  lockedDropdown.value = label;
+}
+
+function handleDropdownFocusOut(event: FocusEvent) {
+  const container = event.currentTarget;
+
+  if (
+    container instanceof HTMLElement &&
+    !container.contains(event.relatedTarget as Node | null)
+  ) {
+    activeDropdown.value = null;
+  }
+}
+
+function updateScroll() {
+  isScrolled.value = window.scrollY > 20;
+}
+
+function handleKeydown(event: KeyboardEvent) {
+  if (event.key === "Escape") {
+    closeMenu();
+    activeDropdown.value = null;
+  }
+}
+
+function handleOutsideClick(event: PointerEvent) {
+  if (
+    isMenuOpen.value &&
+    navbarRef.value &&
+    event.target instanceof Node &&
+    !navbarRef.value.contains(event.target)
+  ) {
+    closeMenu();
+  }
+}
+
+function handleResize() {
+  if (window.innerWidth >= 1280) {
+    closeMenu();
+  }
+}
+
 watch(
   () => route.fullPath,
   () => {
-    isMenuOpen.value = false;
-    mobileOpenSection.value = null;
+    closeMenu();
+    activeDropdown.value = null;
   },
 );
+
+onMounted(() => {
+  updateScroll();
+
+  window.addEventListener("scroll", updateScroll, {
+    passive: true,
+  });
+
+  window.addEventListener("keydown", handleKeydown);
+  window.addEventListener("pointerdown", handleOutsideClick);
+  window.addEventListener("resize", handleResize);
+});
+
+onUnmounted(() => {
+  window.removeEventListener("scroll", updateScroll);
+  window.removeEventListener("keydown", handleKeydown);
+  window.removeEventListener("pointerdown", handleOutsideClick);
+  window.removeEventListener("resize", handleResize);
+});
 </script>
 
 <template>
   <header
-    class="fixed left-0 right-0 top-0 z-50 mx-4 md:mx-[8%] lg:mx-[10%] flex items-center justify-between my-4 rounded-2xl md:rounded-3xl border border-border/20 bg-bg/85 px-6 py-2 shadow-s backdrop-blur-xl"
+    ref="navbarRef"
+    class="fixed inset-x-0 top-0 z-50 pt-3 px-5 sm:px-8 md:px-[8%] lg:px-[9%]"
   >
-    <NuxtLink
-      to="/"
-      class="grid grid-cols-[auto_1fr] items-center gap-x-2"
-      aria-label="TANAIS — Главная"
+    <div
+      class="relative border-border/60 bg-bg shadow-s backdrop-blur-md flex items-center justify-between gap-5 rounded-2xl border px-4 py-3"
     >
-      <img
-        src="/img/logo.png"
-        alt="TANAIS"
-        class="row-span-2 size-14 object-contain"
-      />
-
-      <span
-        class="gradient-text self-end text-base sm:text-lg font-semibold uppercase tracking-[0.2em] md:text-xl"
+      <!-- Logo -->
+      <NuxtLink
+        to="/"
+        aria-label="TANAIS — Главная"
+        class="flex min-w-0 items-center gap-2.5"
+        @click="closeMenu"
       >
-        TANAIS
-      </span>
+        <img
+          src="/img/logo.png"
+          alt=""
+          width="48"
+          height="48"
+          class="size-11 shrink-0 object-contain sm:size-12"
+        />
 
-      <span
-        class="self-start whitespace-nowrap text-[10px] sm:text-xs text-text-muted"
-      >
-        Центр психологической помощи
-      </span>
-    </NuxtLink>
-
-    <nav class="hidden xl:flex gap-6 items-center">
-      <div v-for="item in navItems" :key="item.label" class="group relative">
-        <template v-if="item.children">
-          <NuxtLink
-            :to="item.href"
-            class="relative flex items-center gap-1 text-[clamp(0.5rem_1vw_1.25rem)] transition-colors duration-300"
-            :class="
-              isActive(item.href)
-                ? 'text-primary'
-                : 'text-text-muted hover:text-text'
-            "
+        <div class="flex flex-col">
+          <span
+            class="font-heading text-base font-semibold leading-tight tracking-[0.12em] text-text sm:text-lg"
           >
-            {{ item.label }}
-
-            <Icon
-              name="tabler:chevron-down"
-              class="size-4 transition-transform duration-300 group-hover:rotate-180"
-            />
-
-            <!-- active line -->
-            <span
-              class="absolute -bottom-1 left-0 h-px bg-(image:--color-gradient) transition-all duration-300"
-              :class="isActive(item.href) ? 'w-full' : 'w-0 group-hover:w-full'"
-            />
-          </NuxtLink>
-
-          <!-- Dropdown -->
-          <div
-            class="pointer-events-none absolute left-1/2 top-full w-78 -translate-x-1/2 translate-y-2 opacity-0 transition-all duration-200 group-hover:pointer-events-auto group-hover:translate-y-0 group-hover:opacity-100"
-          >
-            <!-- invisible bridge -->
-            <div class="h-9" />
-
-            <div
-              class="rounded-2xl border border-border/20 bg-bg/95 p-2 shadow-l backdrop-blur-2xl"
-            >
-              <NuxtLink
-                v-for="child in item.children"
-                :key="child.href"
-                :to="child.href"
-                class="group/item flex items-center gap-3 rounded-xl px-4 py-3 transition-colors duration-200 hover:bg-bg-light/60"
-              >
-                <div
-                  class="flex size-9 shrink-0 items-center justify-center rounded-lg border border-primary/10 bg-primary/5 text-primary"
-                >
-                  <Icon :name="child.icon" class="size-4" />
-                </div>
-
-                <span
-                  class="text-sm text-text-muted transition-colors group-hover/item:text-text"
-                >
-                  {{ child.label }}
-                </span>
-
-                <Icon
-                  name="tabler:arrow-right"
-                  class="ml-auto size-4 -translate-x-0.5 text-primary/0 transition-all duration-200 group-hover/item:translate-x-0 group-hover/item:text-primary"
-                />
-              </NuxtLink>
-            </div>
-          </div>
-        </template>
-
-        <!-- Simple item -->
-        <NuxtLink
-          v-else
-          :to="item.href"
-          class="relative block text-[clamp(0.75rem_0.5vw_1.25rem)] transition-colors duration-300"
-          :class="
-            isActive(item.href)
-              ? 'text-primary'
-              : 'text-text-muted hover:text-text'
-          "
-        >
-          {{ item.label }}
+            TANAIS
+          </span>
 
           <span
-            class="absolute -bottom-1 left-0 h-px bg-(image:--color-gradient) transition-all duration-300"
-            :class="isActive(item.href) ? 'w-full' : 'w-0 group-hover:w-full'"
-          />
-        </NuxtLink>
-      </div>
-    </nav>
-
-    <!-- ======================================
-           CTA
-      ======================================= -->
-    <div class="hidden xl:block">
-      <NuxtLink to="/contacts" class="button button-primary translate-0">
-        Записаться
+            class="whitespace-nowrap text-xs leading-relaxed text-text-muted"
+          >
+            Центр психологической помощи
+          </span>
+        </div>
       </NuxtLink>
-    </div>
 
-    <!-- ======================================
-           MOBILE BURGER
-      ======================================= -->
-    <button
-      type="button"
-      class="flex size-11 items-center justify-center rounded-full border border-border/30 text-xl transition-colors hover:border-primary/30 xl:hidden"
-      :aria-expanded="isMenuOpen"
-      aria-label="Открыть меню"
-      @click="isMenuOpen = !isMenuOpen"
-    >
-      <Icon
-        :name="isMenuOpen ? 'tabler:x' : 'tabler:menu-2'"
-        :class="[
-          isMenuOpen ? 'rotate-90 text-primary' : 'text-white',
-          'size-6 transition duration-200',
-        ]"
-      />
-    </button>
-
-    <!-- ======================================
-         MOBILE MENU
-    ======================================= -->
-
-    <Transition name="menu">
+      <!-- Desktop navigation -->
       <nav
-        v-if="isMenuOpen"
-        class="absolute left-0 right-0 top-[calc(100%+8px)] max-h-[calc(100dvh-100px)] overflow-y-auto rounded-2xl border border-border/20 bg-bg/95 p-3 shadow-m backdrop-blur-2xl sm:rounded-3xl lg:hidden"
+        aria-label="Основная навигация"
+        class="hidden items-center gap-8 xl:flex"
       >
-        <div class="flex flex-col" v-for="item in navItems" :key="item.label">
-          <!-- Mobile item with children -->
+        <div
+          v-for="(item, index) in navItems"
+          :key="item.label"
+          class="group relative"
+          @mouseenter="item.children && openDropdown(item.label)"
+          @mouseleave="leaveDropdown(item.label)"
+          @focusin="item.children && (activeDropdown = item.label)"
+          @focusout="handleDropdownFocusOut"
+        >
+          <!-- With dropdown -->
           <template v-if="item.children">
-            <div
-              class="flex items-center rounded-xl transition-colors hover:bg-bg-light/60"
+            <NuxtLink
+              :to="item.href"
+              class="relative flex items-center gap-1.5 py-2 text-sm font-medium transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-primary"
+              :class="
+                isActive(item.href)
+                  ? 'text-primary'
+                  : 'text-text-muted hover:text-text'
+              "
+              :aria-current="route.path === item.href ? 'page' : undefined"
             >
-              <NuxtLink
-                :to="item.href"
-                class="flex-1 px-4 py-3 font-medium"
+              {{ item.label }}
+
+              <Icon
+                name="tabler:chevron-down"
+                class="size-4 transition-transform duration-200 group-hover:rotate-180 group-focus-within:rotate-180"
+              />
+
+              <span
+                class="absolute bottom-0 left-0 h-px w-full origin-left bg-primary transition-transform duration-200"
                 :class="
-                  isActive(item.href) ? 'text-primary' : 'text-text-muted'
+                  isActive(item.href)
+                    ? 'scale-x-100'
+                    : 'scale-x-0 group-hover:scale-x-100 group-focus-within:scale-x-100'
                 "
-              >
-                {{ item.label }}
-              </NuxtLink>
+              />
+            </NuxtLink>
 
-              <button
-                type="button"
-                class="flex size-11 items-center justify-center text-text-muted"
-                @click.stop="toggleMobileSection(item.label)"
-              >
-                <Icon
-                  name="tabler:chevron-down"
-                  class="size-5 transition-transform duration-200"
-                  :class="
-                    mobileOpenSection === item.label
-                      ? 'rotate-180 text-primary'
-                      : ''
-                  "
-                />
-              </button>
-            </div>
-
-            <!-- Mobile children -->
-            <Transition name="submenu">
-              <div
-                v-if="mobileOpenSection === item.label"
-                class="ml-4 border-l border-primary/15 pl-3"
-              >
+            <!-- Dropdown -->
+            <div
+              :id="`desktop-dropdown-${index}`"
+              class="absolute left-1/2 top-full z-20 w-76 -translate-x-1/2 pt-3 transition-[opacity_transform] duration-200"
+              :class="
+                activeDropdown === item.label
+                  ? 'visible pointer-events-auto translate-y-0 opacity-100'
+                  : 'invisible pointer-events-none translate-y-1 opacity-0'
+              "
+            >
+              <div class="h-4" />
+              <div class="rounded-2xl border border-border bg-bg p-2 shadow-l">
                 <NuxtLink
                   v-for="child in item.children"
                   :key="child.href"
                   :to="child.href"
-                  class="flex items-center gap-3 rounded-xl px-4 py-3 text-sm text-text-muted transition-colors hover:bg-white/5 hover:text-text"
+                  @click="closeDropdown(item.label)"
+                  class="group/item flex items-center gap-3 rounded-xl px-3 py-3 transition-colors duration-200 hover:bg-bg-light focus-visible:bg-bg-light focus-visible:outline-none"
                 >
-                  <Icon
-                    :name="child.icon"
-                    class="size-4 shrink-0 text-primary/70"
-                  />
+                  <div
+                    class="flex size-9 shrink-0 items-center justify-center rounded-lg bg-primary/5 text-primary"
+                  >
+                    <Icon :name="child.icon" class="size-4" />
+                  </div>
 
-                  {{ child.label }}
+                  <span
+                    class="text-sm text-text-muted transition-colors duration-200 group-hover/item:text-text"
+                  >
+                    {{ child.label }}
+                  </span>
+
+                  <Icon
+                    name="tabler:arrow-up-right"
+                    class="ml-auto size-4 text-primary/40 transition-colors duration-200 group-hover/item:text-primary"
+                  />
                 </NuxtLink>
               </div>
-            </Transition>
+            </div>
           </template>
 
-          <!-- Mobile simple link -->
+          <!-- Simple link -->
           <NuxtLink
             v-else
             :to="item.href"
-            class="block rounded-xl px-4 py-3 font-medium transition-colors hover:bg-white/5"
+            @click="closeDropdown(item.label)"
+            class="relative block py-2 text-sm font-medium transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-primary"
             :class="
               isActive(item.href)
                 ? 'text-primary'
                 : 'text-text-muted hover:text-text'
             "
+            :aria-current="route.path === item.href ? 'page' : undefined"
           >
             {{ item.label }}
+
+            <span
+              class="absolute bottom-0 left-0 h-px w-full origin-left bg-primary transition-transform duration-200"
+              :class="
+                isActive(item.href)
+                  ? 'scale-x-100'
+                  : 'scale-x-0 group-hover:scale-x-100'
+              "
+            />
           </NuxtLink>
         </div>
-
-        <!-- divider -->
-        <div class="my-3 h-px bg-blue-300/10" />
-
-        <!-- Mobile CTA -->
-        <NuxtLink
-          to="/contacts"
-          class="button button-primary w-full translate-0"
-        >
-          Записаться на консультацию
-
-          <Icon name="tabler:arrow-right" class="size-5" />
-        </NuxtLink>
       </nav>
-    </Transition>
+
+      <!-- Desktop CTA -->
+      <NuxtLink
+        to="/contacts"
+        class="button button-primary group hidden shrink-0 xl:inline-flex"
+      >
+        Записаться
+
+        <Icon
+          name="tabler:arrow-up-right"
+          class="size-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+        />
+      </NuxtLink>
+
+      <!-- Mobile toggle -->
+      <button
+        type="button"
+        class="flex size-11 shrink-0 items-center justify-center rounded-full border-2 border-border bg-bg-light text-text transition-colors duration-200 hover:bg-primary/10 hover:border-primary/30 focus-visible:outline-2 focus-visible:outline-primary xl:hidden"
+        :aria-expanded="isMenuOpen"
+        aria-controls="mobile-navigation"
+        :aria-label="isMenuOpen ? 'Закрыть меню' : 'Открыть меню'"
+        @click="isMenuOpen = !isMenuOpen"
+      >
+        <Icon
+          :name="isMenuOpen ? 'tabler:x' : 'tabler:menu-2'"
+          class="size-5"
+        />
+      </button>
+
+      <!-- Mobile menu -->
+      <Transition name="nav-panel">
+        <nav
+          v-show="isMenuOpen"
+          id="mobile-navigation"
+          data-lenis-prevent
+          aria-label="Мобильная навигация"
+          class="absolute left-0 right-0 top-[calc(100%+12px)] max-h-[calc(100dvh-110px)] overflow-y-auto rounded-2xl border border-border bg-bg p-3 shadow-l backdrop-blur-xl sm:rounded-3xl xl:hidden"
+        >
+          <div class="flex flex-col gap-1">
+            <div v-for="(item, index) in navItems" :key="item.label">
+              <!-- Mobile group -->
+              <template v-if="item.children">
+                <div
+                  class="flex items-center rounded-xl transition-colors hover:bg-bg-light"
+                >
+                  <NuxtLink
+                    :to="item.href"
+                    class="flex-1 px-4 py-3 text-sm font-medium"
+                    :class="isActive(item.href) ? 'text-primary' : 'text-text'"
+                    @click="closeMenu"
+                  >
+                    {{ item.label }}
+                  </NuxtLink>
+
+                  <button
+                    type="button"
+                    class="flex size-11 items-center justify-center rounded-xl text-text-muted hover:text-primary"
+                    :aria-expanded="mobileOpenSection === item.label"
+                    :aria-controls="`mobile-submenu-${index}`"
+                    :aria-label="`Развернуть: ${item.label}`"
+                    @click="toggleMobileSection(item.label)"
+                  >
+                    <Icon
+                      name="tabler:chevron-down"
+                      class="size-5 transition-transform duration-200"
+                      :class="
+                        mobileOpenSection === item.label
+                          ? 'rotate-180 text-primary'
+                          : ''
+                      "
+                    />
+                  </button>
+                </div>
+
+                <!-- Mobile submenu -->
+                <Transition name="nav-submenu">
+                  <div
+                    v-show="mobileOpenSection === item.label"
+                    :id="`mobile-submenu-${index}`"
+                    class="ml-4 border-l border-border pl-3"
+                  >
+                    <NuxtLink
+                      v-for="child in item.children"
+                      :key="child.href"
+                      :to="child.href"
+                      class="flex items-center gap-3 rounded-xl px-4 py-3 text-sm text-text-muted transition-colors duration-200 hover:bg-bg-light hover:text-text"
+                      @click="closeMenu"
+                    >
+                      <Icon
+                        :name="child.icon"
+                        class="size-4 shrink-0 text-primary"
+                      />
+
+                      {{ child.label }}
+                    </NuxtLink>
+                  </div>
+                </Transition>
+              </template>
+
+              <!-- Mobile simple link -->
+              <NuxtLink
+                v-else
+                :to="item.href"
+                class="block rounded-xl px-4 py-3 text-sm font-medium transition-colors duration-200 hover:bg-bg-light"
+                :class="
+                  isActive(item.href) ? 'bg-bg-light text-primary' : 'text-text'
+                "
+                @click="closeMenu"
+              >
+                {{ item.label }}
+              </NuxtLink>
+            </div>
+          </div>
+
+          <!-- Mobile CTA -->
+          <div class="mt-4 border-t border-border pt-4">
+            <NuxtLink
+              to="/contacts"
+              class="button button-primary flex w-full justify-center"
+              @click="closeMenu"
+            >
+              Записаться на консультацию
+
+              <Icon name="tabler:arrow-up-right" class="size-4" />
+            </NuxtLink>
+          </div>
+        </nav>
+      </Transition>
+    </div>
   </header>
 </template>
 
 <style scoped>
-.menu-enter-active,
-.menu-leave-active {
+.nav-panel-enter-active,
+.nav-panel-leave-active {
   transition:
     opacity 0.25s ease,
-    transform 0.25s ease;
+    transform 0.25s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-.menu-enter-from,
-.menu-leave-to {
+.nav-panel-enter-from,
+.nav-panel-leave-to {
   opacity: 0;
   transform: translateY(-8px);
 }
 
-.submenu-enter-active,
-.submenu-leave-active {
+.nav-submenu-enter-active,
+.nav-submenu-leave-active {
   transition:
     opacity 0.2s ease,
     transform 0.2s ease;
 }
 
-.submenu-enter-from,
-.submenu-leave-to {
+.nav-submenu-enter-from,
+.nav-submenu-leave-to {
   opacity: 0;
   transform: translateY(-5px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nav-panel-enter-active,
+  .nav-panel-leave-active,
+  .nav-submenu-enter-active,
+  .nav-submenu-leave-active {
+    transition: none;
+  }
 }
 </style>

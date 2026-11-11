@@ -561,7 +561,7 @@ const cycleGridClass = computed(() => {
           <motion.h2 :variants="fadeUp">
             {{ highlight.title }}
 
-            <span v-if="highlight.accent" class="gradient-text">
+            <span v-if="highlight.accent" class="gradient-text block">
               {{ highlight.accent }}
             </span>
           </motion.h2>
@@ -615,7 +615,7 @@ const cycleGridClass = computed(() => {
           :variants="fadeScale"
         >
           <span
-            class="absolute right-6 top-5 text-6xl font-light tracking-[-0.06em] text-primary/20"
+            class="absolute right-6 top-5 text-6xl font-light tracking-[-0.06em] text-primary/50"
           >
             {{ item.number }}
           </span>
@@ -647,7 +647,7 @@ const cycleGridClass = computed(() => {
       >
         <NuxtLink
           :to="related.to"
-          class="group relative grid gap-6 sm:gap-8 overflow-hidden rounded-4xl border border-primary/20 bg-blue-950/25 p-8 transition-all duration-300 hover:border-primary/35 md:p-10 lg:grid-cols-[1fr_auto] lg:items-center lg:p-12"
+          class="group relative grid gap-6 sm:gap-8 overflow-hidden rounded-4xl border border-border bg-primary/15 p-8 transition-all duration-300 hover:border-primary/35 md:p-10 lg:grid-cols-[1fr_auto] lg:items-center lg:p-12"
         >
           <div class="glow-blue -right-24 -top-24 size-80" />
 
@@ -659,7 +659,7 @@ const cycleGridClass = computed(() => {
             <motion.h2 :variants="fadeUp">
               {{ related.title }}
 
-              <span v-if="related.accent" class="gradient-text">
+              <span v-if="related.accent" class="gradient-text block">
                 {{ related.accent }}
               </span>
             </motion.h2>

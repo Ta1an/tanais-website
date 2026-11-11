@@ -13,10 +13,22 @@ export default defineNuxtConfig({
     externals: {
       inline: [/[\\/]node_modules[\\/]nuxt[\\/]dist[\\/]/],
     },
+    prerender: {
+      crawlLinks: true,
+    },
+    routes: ["/sitemap.xml", "/directions/addictions/gambling"],
+  },
+
+  site: {
+    url: "https://tanais.com.kz",
+    name: "TANAIS",
   },
 
   app: {
     head: {
+      htmlAttrs: {
+        lang: "ru",
+      },
       script: [
         {
           src: "https://www.googletagmanager.com/gtag/js?id=AW-18555509083",

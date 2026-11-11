@@ -13,11 +13,6 @@ import {
   stagger,
 } from "~/utils/motion";
 
-useSeoMeta({
-  title: "Зависимости — TANAIS",
-  description:
-    "Работа с игровой, алкогольной и наркотической зависимостью. Ключевая специализация TANAIS — игровая зависимость и механизмы, которые поддерживают зависимый цикл.",
-});
 
 const otherAddictions = [
   {

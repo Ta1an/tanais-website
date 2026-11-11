@@ -1,8 +1,11 @@
 <script setup lang="ts">
-useSeoMeta({
-  title: "О центре TANAIS",
+import { usePageSeo } from "~/composables/usePageSeo";
+usePageSeo({
+  title: "О центре психологической помощи TANAIS",
   description:
-    "Центр психологической помощи TANAIS. Наш подход, принципы работы, диагностика и специалисты.",
+    "Центр психологической помощи TANAIS в Алматы. " +
+    "Помощь при игровой и других зависимостях, " +
+    "поддержка близких и работа с созависимостью.",
 });
 </script>
 

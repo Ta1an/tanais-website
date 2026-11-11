@@ -156,8 +156,8 @@ function getStepProps(step: (typeof steps)[number]) {
             class="group relative grid h-full grid-rows-subgrid row-span-5 card"
             :class="
               step.accent
-                ? 'border-primary/35 bg-blue-950/45 shadow-(--glow-s) card-hover cursor-pointer'
-                : 'shadow-s'
+                ? 'border-primary/35  card-hover cursor-pointer'
+                : 'shadow-s bg-bg/80'
             "
           >
             <motion.div

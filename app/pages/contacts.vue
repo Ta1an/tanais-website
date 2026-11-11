@@ -6,6 +6,8 @@ import { useGoogleAds } from "~/composables/useGoogleAds";
 
 const { trackWhatsAppClick } = useGoogleAds();
 
+import { usePageSeo } from "~/composables/usePageSeo";
+
 import {
   fadeLeft,
   fadeScale,
@@ -16,12 +18,13 @@ import {
   stagger,
 } from "~/utils/motion";
 
-useSeoMeta({
-  title: "Контакты — TANAIS",
+usePageSeo({
+  title: "Контакты центра TANAIS в Алматы",
   description:
-    "Контакты Центра психологической помощи TANAIS. Запись на консультацию и первичный разбор ситуации.",
+    "Центр психологической помощи TANAIS в Алматы. " +
+    "Помощь при игровой и других зависимостях, " +
+    "поддержка близких и работа с созависимостью.",
 });
-
 /*
   ЗАМЕНИТЕ данные ниже на реальные.
   После этого вся страница обновится автоматически.

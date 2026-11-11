@@ -1,72 +1,116 @@
 @import "tailwindcss";
+@import "lenis/dist/lenis.css";
+
+/* =========================================
+   TANAIS — Design System
+   ========================================= */
 
 :root {
-  --bg-dark: var(--color-slate-950);
-  --bg: var(--color-slate-900);
-  --bg-light: var(--color-slate-700);
-  --text: hsl(0, 0%, 95%);
-  --text-muted: hsl(0, 0%, 80%);
-  --primary: var(--color-cyan-500);
-  --border: var(--color-neutral-300);
-  --gradient: linear-gradient(
-    to right,
-    var(--primary) 0%,
-    var(--color-sky-500) 25%,
-    var(--color-blue-500) 60%,
-    var(--color-violet-500) 100%
-  );
+  /* Backgrounds */
+  --bg-dark: hsl(228, 45%, 94%);
+  --bg: hsl(228, 45%, 98%);
+  --bg-light: hsl(228, 45%, 98%);
 
-  --s-s: 0px 2px 4px hsla(0, 0%, 0%, 0.4);
-  --s-m: 0px 4px 8px hsla(0, 0%, 0%, 0.4);
-  --s-l: 0px 6px 10px hsla(0, 0%, 0%, 0.4);
+  /* Typography */
+  --text: #263653;
+  --text-muted: #5f7085;
+
+  /* Brand */
+  --primary: #225f88;
+  --primary-hover: #194a6b;
+  --accent-violet: #6f528d;
+  --accent-turquoise: #4b9ea6;
+
+  /* Borders */
+  --border: #dce3ed;
+
+  /* Decorative gradient */
+  --gradient: linear-gradient(110deg, #225f88 0%, #327b9c 45%, #6f528d 100%);
+
+  /* Legacy compatibility */
+  --color-gradient: var(--gradient);
+
+  /* Shadows */
+  --s-s: 0 4px 16px rgb(38 54 83 / 0.15);
+  --s-m: 0 8px 28px rgb(38 54 83 / 0.35);
+  --s-l: 0 16px 40px rgb(38 54 83 / 0.45);
+
+  /* Softer legacy glow shadows */
+  --glow-s: 0 4px 16px rgb(34 95 136 / 0.07);
+  --glow-m: 0 8px 28px rgb(34 95 136 / 0.09);
+  --glow-l: 0 16px 40px rgb(34 95 136 / 0.11);
+
+  color-scheme: light;
 }
 
-@theme {
+/* =========================================
+   Tailwind Theme
+   ========================================= */
+
+@theme inline {
+  /* Colors */
   --color-bg-dark: var(--bg-dark);
   --color-bg: var(--bg);
   --color-bg-light: var(--bg-light);
-  --color-gradient: var(--gradient);
-  --color-primary: var(--primary);
-  --color-border: var(--border);
+  --color-surface: var(--surface);
 
   --color-text: var(--text);
   --color-text-muted: var(--text-muted);
 
+  --color-primary: var(--primary);
+  --color-primary-hover: var(--primary-hover);
+  --color-accent-violet: var(--accent-violet);
+  --color-accent-turquoise: var(--accent-turquoise);
+
+  --color-border: var(--border);
+
+  /* Shadows */
   --shadow-s: var(--s-s);
   --shadow-m: var(--s-m);
   --shadow-l: var(--s-l);
 
-  --glow-s: 0 10px 28px rgb(99 102 241 / 0.3), 0 0 16px rgb(34 211 238 / 0.18);
-
-  --glow-m: 0 16px 42px rgb(99 102 241 / 0.32), 0 0 28px rgb(34 211 238 / 0.2);
-
-  --glow-l: 0 24px 64px rgb(99 102 241 / 0.36), 0 0 44px rgb(34 211 238 / 0.24);
-
+  /* Fonts */
   --font-heading: "Onest", sans-serif;
   --font-body: "Golos Text", sans-serif;
 }
 
+/* =========================================
+   Base
+   ========================================= */
+
 @layer base {
-  * {
+  *,
+  *::before,
+  *::after {
     box-sizing: border-box;
   }
+
   html {
-    scroll-behavior: smooth;
+    scroll-behavior: auto;
     scrollbar-gutter: stable;
     font-family: var(--font-body);
     -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
+
   body {
     background-color: var(--bg-dark);
-    font-size: 1rem;
     color: var(--text);
-    line-height: 1.625;
+    font-size: 1rem;
+    line-height: 1.7;
+  }
+
+  ::selection {
+    background-color: #c8dfe9;
+    color: var(--text);
   }
 
   section {
-    @apply px-4 py-12 md:px-[8%] md:py-[6%] lg:px-[10%] lg:py-[4%] scroll-mt-28;
+    @apply scroll-mt-28 px-5 py-16
+           sm:px-8
+           md:px-[8%] md:py-20
+           lg:px-[9%] lg:py-24;
   }
-
   h1,
   h2,
   h3,
@@ -74,7 +118,8 @@
   h5,
   h6 {
     font-family: var(--font-heading);
-    letter-spacing: -0.025em;
+    letter-spacing: -0.035em;
+    color: var(--text);
   }
 
   button,
@@ -83,90 +128,172 @@
   }
 
   h1 {
-    font-weight: 600;
-    font-size: clamp(2.125rem, 7vw, 4rem);
-    line-height: 1.25;
+    font-weight: 500;
+    font-size: clamp(2.75rem, 4vw, 5rem);
+    line-height: 1.1;
   }
+
   h2 {
     font-weight: 500;
-    font-size: clamp(2em, 3.2vw, 3.5rem);
-    line-height: 1.25;
+    font-size: clamp(2.1rem, 3vw, 4rem);
+    line-height: 1.15;
   }
 
   h3 {
     font-weight: 500;
-    font-size: clamp(1.4rem, 2vw, 2rem);
+    font-size: clamp(1.5rem, 2.2vw, 2.25rem);
+    line-height: 1.3;
   }
+
   h4 {
-    font-weight: 400;
-    font-size: clamp(1.175rem, 1.2vw, 1.25rem);
+    font-weight: 500;
+    font-size: clamp(1.125rem, 1.4vw, 1.4rem);
   }
+
   p {
     color: var(--text-muted);
-    font-size: clamp(1rem, 1.2vw, 1.25rem);
+    font-size: clamp(1rem, 1.15vw, 1.125rem);
+    line-height: 1.8;
   }
 }
 
+/* =========================================
+   Components
+   ========================================= */
+
 @layer components {
+  /* Section spacing */
   .top-section {
     @apply pt-28 sm:pt-32 lg:pt-40;
   }
 
+  /* Buttons */
+
   .button {
-    @apply inline-flex items-center justify-center gap-1 rounded-full px-5 py-3 text-base font-medium sm:px-6 sm:text-lg;
+    @apply inline-flex min-h-12 items-center
+           justify-center gap-3 rounded-full
+           px-6 py-3 text-sm font-medium
+           leading-none transition-all duration-300
+           focus-visible:outline-none
+           focus-visible:ring-2
+           focus-visible:ring-primary/40
+           focus-visible:ring-offset-2;
+
+    font-family: var(--font-heading);
   }
 
   .button-primary {
-    @apply relative bg-(image:--color-gradient) shadow-(--glow-s) hover:shadow-(--glow-m) hover:-translate-y-1 transition-all duration-300;
+    @apply bg-primary text-white shadow-s
+           hover:bg-primary-hover hover:shadow-m;
   }
 
   .button-outline {
-    @apply relative bg-neutral-300/10 border border-border/20 shadow-s hover:bg-neutral-300/20 hover:border-border/40 hover:shadow-m transition-all duration-300;
+    @apply border border-border bg-white/80
+           text-primary shadow-s hover:shadow-m
+           hover:border-primary/25
+           hover:bg-bg-light;
   }
 
+  /* Typography */
+
   .gradient-text {
-    @apply bg-(image:--color-gradient) bg-clip-text text-transparent;
+    color: var(--primary);
   }
 
   .background-text {
-    @apply text-xs uppercase leading-6 tracking-[0.4em] text-white/35 hidden lg:inline;
+    @apply hidden text-xs uppercase
+           leading-6 tracking-[0.3em]
+           text-[#8999AC] lg:inline;
   }
 
+  /* Cards */
+
   .card {
-    @apply rounded-2xl p-4 sm:p-5 md:p-6 bg-bg/40 border border-border/20 shadow-s;
+    @apply rounded-2xl border border-border
+           bg-white/85 p-5 shadow-s
+           sm:p-6;
   }
 
   .card-hover {
-    @apply hover:bg-bg/50 hover:border-border/40 hover:shadow-(--glow-s) hover:-translate-y-1 transition-all duration-300;
+    @apply transition-[background-color,border-color,box-shadow]
+           duration-300
+           hover:border-primary/20
+           hover:bg-white
+           hover:shadow-m;
   }
+
+  /* Form fields */
 
   .label {
-    @apply rounded-2xl border border-border/20 bg-bg-dark/40 px-5 py-3 text-text outline-none transition-all duration-300 
-    placeholder:text-text-muted/30 focus:border-primary/50 focus:bg-bg-dark/60;
+    @apply rounded-2xl border border-border
+           bg-white px-5 py-3
+           text-text outline-none
+           transition-all duration-300
+           placeholder:text-text-muted/60
+           focus:border-primary/50
+           focus:ring-4 focus:ring-primary/5;
   }
 
+  /* Icons */
+
   .icon {
-    @apply flex size-14 shrink-0 items-center justify-center rounded-2xl border border-primary/20 bg-primary/5 text-primary;
+    @apply flex size-14 shrink-0
+           items-center justify-center
+           rounded-2xl border border-primary/10
+           bg-primary/5 text-primary;
   }
 
   .social-icon {
-    @apply flex size-11 items-center justify-center rounded-full border border-border/15 bg-white/3 text-text-muted 
-    transition-all duration-300 hover:-translate-y-0.5 hover:border-primary/30 hover:text-primary;
+    @apply flex size-11 items-center
+           justify-center rounded-full
+           border border-border bg-white/70
+           text-text-muted
+           transition-all duration-300
+           hover:border-primary/30
+           hover:bg-bg-light
+           hover:text-primary;
   }
 
+  /* Legacy decorative elements */
+
   .glow-blue {
-    @apply pointer-events-none absolute rounded-full bg-blue-500/10 blur-3xl;
+    @apply pointer-events-none absolute
+           rounded-full bg-blue-400/10
+           opacity-30 blur-3xl;
   }
 
   .glow-violet {
-    @apply pointer-events-none absolute rounded-full bg-violet-500/10 blur-3xl;
+    @apply pointer-events-none absolute
+           rounded-full bg-violet-400/10
+           opacity-30 blur-3xl;
   }
 
   .glow-cyan {
-    @apply pointer-events-none absolute rounded-full bg-cyan-500/10 blur-3xl;
+    @apply pointer-events-none absolute
+           rounded-full bg-cyan-400/10
+           opacity-30 blur-3xl;
   }
 
   .bg-ring {
-    @apply absolute rounded-full border border-cyan-300/10;
+    @apply pointer-events-none absolute
+           rounded-full border border-primary/10;
+  }
+}
+
+/* =========================================
+   Accessibility
+   ========================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .button,
+  .button-primary,
+  .button-outline,
+  .card-hover,
+  .social-icon {
+    transition-duration: 0.01ms !important;
   }
 }

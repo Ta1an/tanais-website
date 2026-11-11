@@ -132,7 +132,7 @@ const trustItems = computed(() => {
             class="flex items-center gap-2"
             :variants="fadeUp"
           >
-            <Icon :name="item.icon" class="size-4 text-emerald-400" />
+            <Icon :name="item.icon" class="size-4 text-accent-turquoise" />
 
             {{ item.text }}
           </motion.span>

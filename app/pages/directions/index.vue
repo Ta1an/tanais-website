@@ -3,6 +3,14 @@ import { motion } from "motion-v";
 
 import Eyebrow from "~/components/shared/eyebrow.vue";
 
+import { usePageSeo } from "~/composables/usePageSeo";
+usePageSeo({
+  title: "	Помощь при зависимостях и созависимости | TANAIS",
+  description:
+    "Центр психологической помощи TANAIS в Алматы. " +
+    "Помощь при игровой и других зависимостях, " +
+    "поддержка близких и работа с созависимостью.",
+});
 import {
   fadeLeft,
   fadeScale,
@@ -26,7 +34,7 @@ const directions = [
     subtitle: "Лудомания · ставки · казино · онлайн-игры",
     description:
       "Работаем с потерей контроля, повторяющимися срывами, финансовыми последствиями и механизмами, которые поддерживают игровой цикл.",
-    icon: "tabler:device-gamepad-2",
+    icon: "tabler:cards",
     to: "/directions/addictions",
     tags: ["Лудомания", "Ставки", "Срывы", "Потеря контроля"],
   },
@@ -59,23 +67,6 @@ const sideLineVariants = {
     },
   },
 };
-
-const directionIconVariants = {
-  hidden: {
-    opacity: 0,
-    scale: 0.8,
-  },
-
-  visible: {
-    opacity: 1,
-    scale: 1,
-
-    transition: {
-      duration: motionDuration.normal,
-      ease: motionEase.smooth,
-    },
-  },
-};
 </script>
 
 <template>
@@ -96,21 +87,13 @@ const directionIconVariants = {
           <Eyebrow text="Направления" />
         </motion.div>
 
-        <motion.h1
-          class="mb-4 mt-8"
-          :variants="fadeUp"
-        >
+        <motion.h1 class="mb-4 mt-8" :variants="fadeUp">
           Разные состояния.
 
-          <span class="gradient-text block">
-            Разные механизмы.
-          </span>
+          <span class="gradient-text block"> Разные механизмы. </span>
         </motion.h1>
 
-        <motion.p
-          class="max-w-3xl"
-          :variants="fadeUp"
-        >
+        <motion.p class="max-w-3xl" :variants="fadeUp">
           Мы не подбираем помощь только по названию проблемы. Важно понять, что
           поддерживает зависимое поведение, как формируется повторяющийся цикл и
           какую роль в нём играет окружение человека.
@@ -131,20 +114,12 @@ const directionIconVariants = {
             :variants="sideLineVariants"
           />
 
-          <motion.div
-            :variants="stagger(0.1, 0.25)"
-          >
+          <motion.div :variants="stagger(0.1, 0.25)">
             <motion.div :variants="fadeUp">
-              <Icon
-                name="tabler:route"
-                class="mb-5 size-8 text-primary"
-              />
+              <Icon name="tabler:route" class="mb-5 size-8 text-primary" />
             </motion.div>
 
-            <motion.p
-              class="text-sm text-text-muted/65"
-              :variants="fadeUp"
-            >
+            <motion.p class="text-sm text-text-muted/65" :variants="fadeUp">
               Основной фокус TANAIS — игровая зависимость и созависимость. При
               этом мы рассматриваем не только поведение самого человека, но и
               систему отношений вокруг него.
@@ -166,29 +141,19 @@ const directionIconVariants = {
         while-in-view="visible"
         :in-view-options="motionViewport.medium"
       >
-        <motion.div
-          :variants="stagger(0.1)"
-        >
+        <motion.div :variants="stagger(0.1)">
           <motion.div :variants="fadeUp">
             <Eyebrow text="Ключевая специализация" />
           </motion.div>
 
-          <motion.h2
-            class="mt-8"
-            :variants="fadeUp"
-          >
+          <motion.h2 class="mt-8" :variants="fadeUp">
             Основной фокус
 
-            <span class="gradient-text">
-              TANAIS
-            </span>
+            <span class="gradient-text"> TANAIS </span>
           </motion.h2>
         </motion.div>
 
-        <motion.p
-          class="max-w-xl lg:place-self-end"
-          :variants="fadeUp"
-        >
+        <motion.p class="max-w-xl lg:place-self-end" :variants="fadeUp">
           Зависимость редко существует изолированно. Поэтому мы отдельно
           работаем как с игровым поведением самого человека, так и с близкими,
           которые оказываются вовлечены в зависимый цикл.
@@ -223,15 +188,11 @@ const directionIconVariants = {
             </span>
 
             <!-- Icon -->
-            <motion.div
+            <div
               class="icon size-20 shrink-0 transition-all duration-500 group-hover:border-violet-400/30 group-hover:text-violet-400"
-              :variants="directionIconVariants"
             >
-              <Icon
-                :name="direction.icon"
-                class="size-11"
-              />
-            </motion.div>
+              <Icon :name="direction.icon" class="size-11" />
+            </div>
 
             <!-- Content -->
             <div
@@ -244,7 +205,7 @@ const directionIconVariants = {
               {{ direction.title }}
             </h3>
 
-            <p class="mt-5 text-base leading-[1.75] text-text-muted/70">
+            <p class="mt-5 text-base leading-[1.75] text-text-muted">
               {{ direction.description }}
             </p>
 
@@ -253,7 +214,7 @@ const directionIconVariants = {
               <span
                 v-for="tag in direction.tags"
                 :key="tag"
-                class="rounded-full border border-border/10 bg-white/3 px-3 py-1.5 text-xs text-text-muted/60"
+                class="rounded-full border border-border bg-primary/3 px-3 py-1.5 text-xs text-text-muted"
               >
                 {{ tag }}
               </span>
@@ -279,15 +240,10 @@ const directionIconVariants = {
           :variants="fadeUp"
         >
           <div class="icon row-span-2 hidden size-12 md:flex">
-            <Icon
-              name="tabler:plus"
-              class="size-5"
-            />
+            <Icon name="tabler:plus" class="size-5" />
           </div>
 
-          <h4>
-            Другие формы зависимого поведения
-          </h4>
+          <h4>Другие формы зависимого поведения</h4>
 
           <p class="text-sm text-text-muted/55">
             Алкогольная, наркотическая и другие формы зависимого поведения.
@@ -299,10 +255,7 @@ const directionIconVariants = {
           >
             Подробнее о зависимостях
 
-            <Icon
-              name="tabler:arrow-right"
-              class="size-4"
-            />
+            <Icon name="tabler:arrow-right" class="size-4" />
           </NuxtLink>
         </motion.div>
       </motion.div>
