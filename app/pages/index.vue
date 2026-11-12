@@ -1,12 +1,15 @@
 <script lang="ts" setup>
 import { usePageSeo } from "~/composables/usePageSeo";
+import { useOrganizationSchema } from "~/composables/useOrganizationSchema";
 usePageSeo({
-  title: "Психологическая помощь при зависимостях в Алматы | TANAIS",
+  title: "Психологическая помощь в Алматы | TANAIS",
   description:
     "Центр психологической помощи TANAIS в Алматы. " +
-    "Помощь при игровой и других зависимостях, " +
-    "поддержка близких и работа с созависимостью.",
+    "Помощь при зависимостях и созависимости, " +
+    "поддержка близких и индивидуальные консультации.",
 });
+
+useOrganizationSchema();
 </script>
 
 <template>

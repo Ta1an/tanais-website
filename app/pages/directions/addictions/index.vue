@@ -3,6 +3,7 @@ import { motion } from "motion-v";
 
 import Eyebrow from "~/components/shared/eyebrow.vue";
 
+
 import {
   fadeLeft,
   fadeScale,
@@ -13,6 +14,17 @@ import {
   stagger,
 } from "~/utils/motion";
 
+import { usePageSeo } from "~/composables/usePageSeo";
+
+usePageSeo({
+  title: "Психологическая помощь при зависимостях | TANAIS",
+
+  description:
+    "Центр TANAIS в Алматы. Психологическая помощь " +
+    "при игровой, алкогольной и наркотической " +
+    "зависимости. Работа с зависимым поведением " +
+    "и поддержка близких.",
+});
 
 const otherAddictions = [
   {

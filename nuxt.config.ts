@@ -1,4 +1,3 @@
-// https://nuxt.com/docs/api/configuration/nuxt-config
 import tailwindcss from "@tailwindcss/vite";
 
 export default defineNuxtConfig({
@@ -13,10 +12,19 @@ export default defineNuxtConfig({
     externals: {
       inline: [/[\\/]node_modules[\\/]nuxt[\\/]dist[\\/]/],
     },
+
     prerender: {
       crawlLinks: true,
+      routes: [
+        "/",
+        "/sitemap.xml",
+
+        "/directions",
+        "/directions/addictions",
+        "/directions/addictions/gambling",
+        "/directions/codependency",
+      ],
     },
-    routes: ["/sitemap.xml", "/directions/addictions/gambling"],
   },
 
   site: {
@@ -29,6 +37,7 @@ export default defineNuxtConfig({
       htmlAttrs: {
         lang: "ru",
       },
+
       script: [
         {
           src: "https://www.googletagmanager.com/gtag/js?id=AW-18555509083",
@@ -47,7 +56,8 @@ export default defineNuxtConfig({
   },
 
   css: ["@/assets/css/main.css"],
-  modules: ["@nuxt/icon", "@nuxt/fonts", "motion-v/nuxt"],
+
+  modules: ["@nuxt/icon", "@nuxt/fonts", "motion-v/nuxt", "@nuxtjs/sitemap"],
 
   icon: {
     mode: "css",
@@ -63,6 +73,7 @@ export default defineNuxtConfig({
     defaults: {
       subsets: ["cyrillic-ext", "cyrillic"],
     },
+
     families: [
       {
         name: "Onest",

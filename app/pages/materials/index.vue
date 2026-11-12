@@ -3,13 +3,6 @@ import Eyebrow from "~/components/shared/eyebrow.vue";
 import { AnimatePresence, motion } from "motion-v";
 
 import { usePageSeo } from "~/composables/usePageSeo";
-usePageSeo({
-  title: "Статьи о зависимостях и психологии | TANAIS",
-  description:
-    "Центр психологической помощи TANAIS в Алматы. " +
-    "Помощь при игровой и других зависимостях, " +
-    "поддержка близких и работа с созависимостью.",
-});
 
 import {
   fadeLeft,
@@ -21,6 +14,13 @@ import {
   stagger,
 } from "~/utils/motion";
 
+usePageSeo({
+  title: "Материалы о психологии и зависимостях | TANAIS",
+  description:
+    "Полезные материалы центра TANAIS " +
+    "о зависимостях, созависимости, " +
+    "эмоциональном состоянии и поддержке близких.",
+});
 
 type MaterialType = "test" | "video" | "article" | "guide";
 
