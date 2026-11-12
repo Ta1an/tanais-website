@@ -30,6 +30,7 @@ export default defineNuxtConfig({
   site: {
     url: "https://tanais.com.kz",
     name: "TANAIS",
+    trailingSlash: true,
   },
 
   app: {

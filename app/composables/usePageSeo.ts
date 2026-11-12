@@ -1,6 +1,6 @@
-
 import { computed, toValue, type MaybeRefOrGetter } from "vue";
 
+const SITE_URL = "https://tanais.com.kz";
 type PageSeoOptions = {
   title: MaybeRefOrGetter<string>;
   description: MaybeRefOrGetter<string>;
@@ -15,13 +15,13 @@ export function usePageSeo({
   const route = useRoute();
 
   const canonical = computed(() => {
-    const path =
-      route.path === "/"
-        ? "/"
-        : route.path.replace(/\/+$/, "");
+  const path =
+    route.path === "/"
+      ? "/"
+      : `${route.path.replace(/\/+$/, "")}/`;
 
-    return `https://tanais.com.kz${path}`;
-  });
+  return `${SITE_URL}${path}`;
+});
 
   const ogImage = `https://tanais.com.kz${image}`;
 
